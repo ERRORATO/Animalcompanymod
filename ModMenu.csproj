@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>AnimalCompanyMod</AssemblyName>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Essential Unity & VR References -->
+    <Reference Include="UnityEngine"><HintPath>libs/UnityEngine.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.UI"><HintPath>libs/UnityEngine.UI.dll</HintPath></Reference>
+    <Reference Include="UnityEngine.AssetBundleModule"><HintPath>libs/UnityEngine.AssetBundleModule.dll</HintPath></Reference>
+    <Reference Include="OVRPlugin"><HintPath>libs/OVRPlugin.dll</HintPath></Reference>
+    <Reference Include="Photon3Unity3D"><HintPath>libs/Photon3Unity3D.dll</HintPath></Reference>
+    <Reference Include="Assembly-CSharp"><HintPath>libs/Assembly-CSharp.dll</HintPath></Reference>
+  </ItemGroup>
+
+</Project>
