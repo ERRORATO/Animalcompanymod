@@ -1,11 +1,35 @@
+name: Build Mod
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
 
-- uses: actions/checkout@v3
-- name: Setup Unity
-  uses: game-ci/unity-installer@v3
-  with:
-    unityVersion: 2021.3.33f1
-- name: Build project
-  uses: game-ci/unity-builder@v3
-  with:
-    projectPath: .
-    buildTarget: StandaloneWindows64
+      - name: Setup Unity
+        uses: game-ci/unity-installer@v3
+        with:
+          unityVersion: 2021.3.33f1
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Copy Unity managed DLLs for compilation
+        run: |
+          mkdir -p libs
+          # game-ci installer exposes UNITY_HOME; copy common Unity Engine assemblies
+          cp "$UNITY_HOME/Editor/Data/Managed/UnityEngine.CoreModule.dll" libs/ 2>/dev/null || true
+          cp "$UNITY_HOME/Editor/Data/Managed/UnityEngine.dll" libs/ 2>/dev/null || true
+          cp "$UNITY_HOME/Editor/Data/Managed/UnityEngine.UI.dll" libs/ 2>/dev/null || true
+          ls -la libs
+
+      - name: Build DLL
+        run: dotnet build --configuration Release
+
+      - name: Upload Mod DLL
+        uses: actions/upload-artifact@v4
+        with:
+          name: ErroratoMenu
+          path: bin/Release/netstandard2.1/*.dll
